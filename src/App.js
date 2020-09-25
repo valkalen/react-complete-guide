@@ -14,8 +14,8 @@
 //     otherState:  'hey'
 //   });
 
-
-
+//You can have as many useState cases as you want
+// Hooks completly replace NOT merge state. Make sure you don't loose your other state. Work around is to create multiple useStates
 //   const switchNameHandler = () => {
 //   setPersonsState({
 //     persons: [
