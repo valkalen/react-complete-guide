@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
 import Person from './Person/Person';
 
-class Persons extends React.PureComponent {
+class Persons extends PureComponent {
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps', props);
   //   return state;
@@ -22,7 +22,7 @@ class Persons extends React.PureComponent {
   //with PureComponent shouldComponentUpdate is not needed since PureComponent performs check on every property that is passed to Persons
   //You don't need implement shouldComponentUpdate or React.meme on every component, because some of the component always update. Only implement
   //them where it effects performance
-  
+
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getShapShotBeforeUpdate');
     return { mgs: 'Sanpshot!' };
