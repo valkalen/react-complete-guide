@@ -44,24 +44,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import styled from 'styled-components';
+import classes from './App.module.css'
+//import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+//import styled from 'styled-components';
 //import Radium, {StyleRoot} from 'radium';
 
 
 
-const StyledButton = styled.button`
-    background-color: ${props => props.alt? 'red': 'green'};
-    color: white;
-    font: inherit;
-    border: 1px solid blue;
-    padding: 8px;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: ${props => props.alt? 'salmon': 'lightgreen'};
-      color: black;
-    }
-  `;
+// const StyledButton = styled.button`
+//     background-color: ${props => props.alt? 'red': 'green'};
+//     color: white;
+//     font: inherit;npm run 
+//     border: 1px solid blue;
+//     padding: 8px;
+//     cursor: pointer;
+
+//     &:hover {
+//       background-color: ${props => props.alt? 'salmon': 'lightgreen'};
+//       color: black;
+//     }
+//   `;
 
 
 class App extends Component {
@@ -111,32 +113,34 @@ class App extends Component {
 
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
-    
-  
+    // const style = {
+    //   backgroundColor: 'green',
+    //   color: 'white',
+    //   font: 'inherit',
+    //   border: '1px solid blue',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    //   ':hover': {
+    //     backgroundColor: 'lightgreen',
+    //     color: 'black'
+    //   }
+    // };
+    let btnClass = '';
+
     let persons = null;
     if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
+            //return <ErrorBoundary key={person.id}>
             return <Person
+              key={person.id}
               name={person.name}
               age={person.age}
               click={() => this.deletePersonHandler(index)}
-              key={person.id}
               changed={(event) => this.nameChangeHandler(event, person.id)}
             />
+            //</ErrorBoundary>
           })}
         </div>
       );
@@ -145,35 +149,39 @@ class App extends Component {
       //   backgroundColor: 'salmon',
       //   color: 'black'
       // }
+
+      btnClass = classes.Red;
     }
 
     //let classes = ['red', 'bold'].join(' ');
 
-    const classes = [];
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); //classes = ['red']
+      assignedClasses.push(classes.red); //classes = ['red']
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); //classes = ['red', 'bold']
+      assignedClasses.push(classes.bold); //classes = ['red', 'bold']
     }
 
     return (
       //<StyleRoot>
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!!!</p>
-        <StyledButton
+        <p className={assignedClasses.join(' ')}>This is really working!!!</p>
+        <button
           //style={style}
+          className={btnClass}
           //key='key1'
-          alt = {this.state.showPersons}
-          onClick={this.switchNameHandler.bind(this, "Valik")}>Switch Name</StyledButton>
-        <StyledButton
-          //style={style}
+          //alt = {this.state.showPersons}
+          onClick={this.switchNameHandler.bind(this, "Valik")}>Switch Name
+          </button>
+        <button
+          className={btnClass}
           //key='key2'
-          alt = {this.state.showPersons}
+          // alt = {this.state.showPersons}
           onClick={this.togglePersonsHandler}>Toggle Person
             {/* or you can do this onClick={()=>this.togglePersonsHandler()}>Toggle Person*/}
-        </StyledButton>
+        </button>
         {persons}
         {/* alternative syntax
           this.state.showPersons === true?
