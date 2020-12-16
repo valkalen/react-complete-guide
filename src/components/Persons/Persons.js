@@ -1,24 +1,28 @@
 import React from 'react';
 import Person from './Person/Person';
 
-class Persons extends React.Component {
+class Persons extends React.PureComponent {
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps', props);
   //   return state;
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('[Persons.js shouldComponentUpdate]', nextProps, nextState);
-    if (
-      nextProps.persons !== this.props.persons ||
-      nextProps.changed !== this.props.changed ||
-      nextProps.clicked !== this.props.clicked
-    ) {
-      return true;
-    }
-    return false; //do not update
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('[Persons.js shouldComponentUpdate]', nextProps, nextState);
+  //   if (
+  //     nextProps.persons !== this.props.persons ||
+  //     nextProps.changed !== this.props.changed ||
+  //     nextProps.clicked !== this.props.clicked
+  //   ) {
+  //     return true;
+  //   }
+  //   return false; //do not update
+  // }
 
+  //with PureComponent shouldComponentUpdate is not needed since PureComponent performs check on every property that is passed to Persons
+  //You don't need implement shouldComponentUpdate or React.meme on every component, because some of the component always update. Only implement
+  //them where it effects performance
+  
   getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getShapShotBeforeUpdate');
     return { mgs: 'Sanpshot!' };
@@ -31,6 +35,7 @@ class Persons extends React.Component {
   componentWillUnmount() {
     console.log('[Persons.js] componentWillUnmount');
   }
+
   render() {
     console.log('[Persons.js rendering...]');
     return this.props.persons.map((person, index) => {
