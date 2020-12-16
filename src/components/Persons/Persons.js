@@ -7,18 +7,29 @@ class Persons extends React.Component {
   //   return state;
   // }
 
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('[Persons.js shouldComponentUpdate]',nextProps, nextState);
-    return true;
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[Persons.js shouldComponentUpdate]', nextProps, nextState);
+    if (
+      nextProps.persons !== this.props.persons ||
+      nextProps.changed !== this.props.changed ||
+      nextProps.clicked !== this.props.clicked
+    ) {
+      return true;
+    }
+    return false; //do not update
   }
 
-  getSnapshotBeforeUpdate(prevProps, prevState){
+  getSnapshotBeforeUpdate(prevProps, prevState) {
     console.log('[Persons.js] getShapShotBeforeUpdate');
-    return {mgs: 'Sanpshot!'};
+    return { mgs: 'Sanpshot!' };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot){
+  componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate', prevProps, prevState, snapshot);
+  }
+
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
   }
   render() {
     console.log('[Persons.js rendering...]');
