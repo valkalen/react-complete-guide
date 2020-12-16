@@ -35,6 +35,14 @@ class App extends Component {
     console.log('[App.js] componentDidMount');
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate(){
+    console.log('[App.js] componentDidUpdate');
+  }
   deletePersonHandler = (index) => {
     const persons = [...this.state.persons]; //copy the array first, slice() without args does the same thing
     persons.splice(index, 1);
