@@ -5,6 +5,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import classes from './App.module.css'
 //import WithClass from '../components/hoc/WithClass';
 import withClass from '../components/hoc/withClass2';
+import AuthContext from '../context/auth-context';
 
 
 class App extends Component {
@@ -22,7 +23,8 @@ class App extends Component {
     otherState: 'hey',
     showPersons: false,
     showCockpit: true,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -47,6 +49,11 @@ class App extends Component {
   componentDidUpdate() {
     console.log('[App.js] componentDidUpdate');
   };
+
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  }
+
   deletePersonHandler = (index) => {
     const persons = [...this.state.persons]; //copy the array first, slice() without args does the same thing
     persons.splice(index, 1);
@@ -65,8 +72,8 @@ class App extends Component {
     //the reason why is because React schedules updates and they might turn out to be out of sync in the end
     //this.setState({changeCounter: this.state.changeCounter + 1}); - incorrect way of updating the state
     //the right way would be this
-    this.setState((prevState, props)=> {
-      return {changeCounter: prevState.changeCounter + 1};
+    this.setState((prevState, props) => {
+      return { changeCounter: prevState.changeCounter + 1 };
     });
   };
 
@@ -87,6 +94,7 @@ class App extends Component {
         persons={this.state.persons}
         clicked={this.deletePersonHandler}
         changed={this.nameChangeHandler}
+        isAuthenticated={this.state.authenticated}
       />
     };
     //the first way of using Higher order components
@@ -107,13 +115,18 @@ class App extends Component {
     return (
       <React.Fragment>
         <button onClick={() => { this.setState({ showCockpit: false }) }}>Remove Cockpit</button>
-        {this.state.showCockpit ? <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          personsLength={this.state.persons.length}
-          clicked={this.togglePersonsHandler}
-        /> : null}
-        {persons}
+        <AuthContext.Provider value={{
+          authenticated: this.state.authenticated,
+          login: this.loginHandler
+        }}>
+          {this.state.showCockpit ? <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+          /> : null}
+          {persons}
+        </AuthContext.Provider>
       </React.Fragment>
     );
   }

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/auth-context';
 
 const Cockpit = (props) => {
   const toggleButtonnRef = useRef(null);
-  
+
   //use useEffect instead of componentDidMount and componentDidUpdate, the same effect
   //this useEffect will only run on componentDidMount and componentWillUnmount events
   useEffect(() => {
@@ -17,7 +18,7 @@ const Cockpit = (props) => {
 
     //this line of code belongs to reference
     toggleButtonnRef.current.click();
-    
+
     return () => {
       clearTimeout(timer);
       console.log('[Cockpit.js] clean up work in useEffect'); //similar to componentWillUnmount
@@ -50,6 +51,9 @@ const Cockpit = (props) => {
         ref={toggleButtonnRef}
         onClick={props.clicked}>Toggle Person
       </button>
+      <AuthContext.Consumer>
+        {context => <button onClick={context.login}>Log in</button>}
+      </AuthContext.Consumer>
     </div>
   );
 };

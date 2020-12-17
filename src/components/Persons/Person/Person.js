@@ -4,15 +4,16 @@ import './Person.css';
 import PropTypes from 'prop-types';
 import classes from './Person.module.css'
 import withClass from '../../hoc/withClass2';
+import AuthContext from '../../../context/auth-context';
 
 class Person extends React.Component {
     //belongs to the second way of uising ref 2.
-    constructor(props){
+    constructor(props) {
         super(props);
         this.inputElementRef = React.createRef();
     }
-    
-    componentDidMount(){
+
+    componentDidMount() {
         //belongs to the first way of using reference 1.
         //this.inputElement.focus();
 
@@ -26,6 +27,9 @@ class Person extends React.Component {
         //the way I want to use in the future 
         return (
             <React.Fragment>
+                <AuthContext.Consumer>
+                    {(context) => context.authenticated? <p>Authenticated</p> : <p>Please log in</p> }
+                </AuthContext.Consumer>
                 <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input
