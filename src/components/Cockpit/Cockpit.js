@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classes from './Cockpit.module.css';
 
 const Cockpit = (props) => {
+  const toggleButtonnRef = useRef(null);
+  
   //use useEffect instead of componentDidMount and componentDidUpdate, the same effect
   //this useEffect will only run on componentDidMount and componentWillUnmount events
   useEffect(() => {
@@ -12,6 +14,10 @@ const Cockpit = (props) => {
     const timer = setTimeout(() => {
       alert('Saved data to cloud');
     }, 1000);
+
+    //this line of code belongs to reference
+    toggleButtonnRef.current.click();
+    
     return () => {
       clearTimeout(timer);
       console.log('[Cockpit.js] clean up work in useEffect'); //similar to componentWillUnmount
@@ -41,6 +47,7 @@ const Cockpit = (props) => {
       <p className={assignedClasses.join(' ')}>This is really working!!!</p>
       <button
         className={btnClass}
+        ref={toggleButtonnRef}
         onClick={props.clicked}>Toggle Person
       </button>
     </div>
