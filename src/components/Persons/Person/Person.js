@@ -6,38 +6,37 @@ import classes from './Person.module.css'
 import withClass from '../../hoc/withClass2';
 
 class Person extends React.Component {
+    //belongs to the second way of uising ref 2.
+    constructor(props){
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+    
+    componentDidMount(){
+        //belongs to the first way of using reference 1.
+        //this.inputElement.focus();
+
+
+        //belongs to the second way of using reference 2.
+        this.inputElementRef.current.focus();
+    }
+
     render() {
         console.log('[Person.js] rendering...');
-        // return (
-        //     <div className={classes.Person}>
-        //         <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
-        //         <p>{this.props.children}</p>
-        //         <input type="text" onChange={this.props.changed} value={this.props.name}></input>
-        //     </div>
-        // );
-
-        //one way to render adjacent JSX elements without a div wrapper(remember React can only return a single element)
-        // return [
-        //     <p key='1' onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>,
-        //     <p key='2'>{this.props.children}</p>,
-        //     <input key='3' type="text" onChange={this.props.changed} value={this.props.name}></input>
-        // ];
-
-        //another way but it is a work around by the guy from the Udemy, he created his own component wrapper
-        // return (
-        //     <Aux>
-        //         <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
-        //         <p>{this.props.children}</p>
-        //         <input type="text" onChange={this.props.changed} value={this.props.name}></input>
-        //     </Aux>
-        // );
-
         //the way I want to use in the future 
-         return (
+        return (
             <React.Fragment>
                 <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.changed} value={this.props.name}></input>
+                <input
+                    type="text"
+                    //belongs to the first way of using ref 1.
+                    //ref={(inputElement) => {this.inputElement = inputElement}}
+                    onChange={this.props.changed}
+                    //belongs to the second way of using ref 2.
+                    ref={this.inputElementRef}
+                    value={this.props.name}
+                />
             </React.Fragment>
         );
     }
