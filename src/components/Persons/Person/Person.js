@@ -13,6 +13,9 @@ class Person extends React.Component {
         this.inputElementRef = React.createRef();
     }
 
+    //NEW WAY of accessing context
+    static contextType = AuthContext;
+
     componentDidMount() {
         //belongs to the first way of using reference 1.
         //this.inputElement.focus();
@@ -20,16 +23,21 @@ class Person extends React.Component {
 
         //belongs to the second way of using reference 2.
         this.inputElementRef.current.focus();
+
+        //NEW WAY of accessing context, react creates the this.context variable 
+        console.log(this.context.authenticated);
     }
 
+    componentDidUpdate(){
+        console.log(this.context.authenticated);
+    }
+    
     render() {
         console.log('[Person.js] rendering...');
         //the way I want to use in the future 
         return (
             <React.Fragment>
-                <AuthContext.Consumer>
-                    {(context) => context.authenticated? <p>Authenticated</p> : <p>Please log in</p> }
-                </AuthContext.Consumer>
+                {this.context.authenticated? <p>Authenticated</p> : <p>Please log in</p> /*NEW WAY of accessing context*/}  
                 <p onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
                 <p>{this.props.children}</p>
                 <input

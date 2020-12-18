@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import classes from './Cockpit.module.css';
 import AuthContext from '../../context/auth-context';
 
 const Cockpit = (props) => {
   const toggleButtonnRef = useRef(null);
+
+  //Set up context in function-based components
+  const context = useContext(AuthContext);
+  console.log("ok",context);
 
   //use useEffect instead of componentDidMount and componentDidUpdate, the same effect
   //this useEffect will only run on componentDidMount and componentWillUnmount events
@@ -51,9 +55,7 @@ const Cockpit = (props) => {
         ref={toggleButtonnRef}
         onClick={props.clicked}>Toggle Person
       </button>
-      <AuthContext.Consumer>
-        {context => <button onClick={context.login}>Log in</button>}
-      </AuthContext.Consumer>
+      <button onClick={context.login}>Log in</button>
     </div>
   );
 };
